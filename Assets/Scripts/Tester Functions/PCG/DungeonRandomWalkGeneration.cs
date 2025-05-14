@@ -7,25 +7,25 @@ using UnityEngine.Serialization;
 
 public class DungeonRandomWalkGeneration : AbstractDungeonGenerator
 {
-    [SerializeField] private SO_RandomWalkGenerator roomGenerationParameters;
+    [SerializeField] protected SO_RandomWalkGenerator randomWalkParameters;
 
     protected override void RunProceduralGeneration() 
     {
-        HashSet<Vector2Int> floorPosition = RunRandomWalk(roomGenerationParameters);
+        HashSet<Vector2Int> floorPosition = RunRandomWalk(randomWalkParameters, startPose);
         tileMapVisualizer.ClearTiles();
         tileMapVisualizer.PaintFloorTiles(floorPosition);
         WallGenerator.CreateWalls(floorPosition, tileMapVisualizer);
     }
 
-    protected HashSet<Vector2Int> RunRandomWalk(SO_RandomWalkGenerator parameters)
+    protected HashSet<Vector2Int> RunRandomWalk(SO_RandomWalkGenerator parameters, Vector2Int position)
     {
-        var currentPose = startPose;
+        var currentPose = position;
         HashSet<Vector2Int> floorPose = new HashSet<Vector2Int>();
-        for (int i = 0; i < roomGenerationParameters.iteration; i++)
+        for (int i = 0; i < randomWalkParameters.iteration; i++)
         {
-            var path = ProceduralGenerationAlgorithm.SimpleRandomWalk(currentPose, roomGenerationParameters.walkLength);
+            var path = ProceduralGenerationAlgorithm.SimpleRandomWalk(currentPose, randomWalkParameters.walkLength);
             floorPose.UnionWith(path); // hashset function, check online or GPT
-            if (roomGenerationParameters.startRandomlyEachIteration)
+            if (randomWalkParameters.startRandomlyEachIteration)
             {
                 currentPose = floorPose.ElementAt(Random.Range(0, floorPose.Count));
             }

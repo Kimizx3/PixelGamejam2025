@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
 
-            EnemyAI enemyAI = collision.GetComponent<EnemyAI>();
+            Slime enemyAI = collision.GetComponent<Slime>();
             if (enemyAI != null)
             {
                 enemyAI.TakeDamage(_bulletType.pistolBulletDamage);

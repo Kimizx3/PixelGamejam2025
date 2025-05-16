@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,28 @@ public class TargetDetector : Detector
         }
         else
         {
-            
+            _colliders = null;
+        }
+
+        aiData.targets = _colliders;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (showGizmos == false)
+        {
+            return;
+        }
+        
+        Gizmos.DrawWireSphere(transform.position, targetDetectionRange);
+        if (_colliders == null)
+        {
+            return;
+        }
+        Gizmos.color = Color.magenta;
+        foreach (var item in _colliders)
+        {
+            Gizmos.DrawSphere(item.position, 0.3f);
         }
     }
 }

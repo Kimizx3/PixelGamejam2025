@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class AgentMover : MonoBehaviour
 {
     private Rigidbody2D _rb;
 
     [SerializeField] private float maxSpeed = 2f, acceleration = 50f, deacceleration = 100f;
-    [SerializeField] private float currentSpeed = 0f;
+    [SerializeField] private float currentSpeed = 2f;
 
     private Vector2 _oldMovementInput;
     public Vector2 MovementInput { get; set; }

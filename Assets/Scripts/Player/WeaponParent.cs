@@ -58,7 +58,7 @@ public class WeaponParent : MonoBehaviour
         }
     }
 
-    public void OnShootPerformed()
+    public void Attack()
     {
         if (_attackLock)
         {

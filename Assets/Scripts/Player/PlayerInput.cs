@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour
     private Vector2 _movementInput;
     private Vector2 _pointerInput;
     private bool _attackInput;
-    private Movement _playerMovement;
+    private AgentMover _playerMovement;
     private WeaponParent _weaponParent;
     private Camera _cam;
     //private WeaponParent weaponParent;
@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         //_cam = Camera.main;
-        _playerMovement = GetComponent<Movement>();
+        _playerMovement = GetComponent<AgentMover>();
         _weaponParent = GetComponentInChildren<WeaponParent>();
     }
 
@@ -54,7 +54,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
         _weaponParent.PositioningWeapon();
-        _weaponParent.OnShootPerformed();
+        _weaponParent.Attack();
     }
 
     private void HandleInput()

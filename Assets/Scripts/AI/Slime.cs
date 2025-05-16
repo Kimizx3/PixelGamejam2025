@@ -43,6 +43,7 @@ public class Slime : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         initPosition = transform.position;
         currentHealth = maxHealth;
+        player = GameManager.Instance.PlayerTransform;
     }
 
     private void Update()

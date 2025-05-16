@@ -8,8 +8,14 @@ public class EnemyAI : MonoBehaviour
 {
     public SO_EnemyType _enemyType;
     public SO_GoldType goldData;
+    public GameObject target;
 
     public int heath = 4;
+
+    private void Start()
+    {
+        StartCoroutine(DetectionCoroutine());
+    }
 
     public void TakeDamage(int damage)
     {
@@ -31,5 +37,35 @@ public class EnemyAI : MonoBehaviour
                 transform.position + (Vector3)randomOffset, Quaternion.identity);
         }
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (target.CompareTag("Player"))
+        {
+            
+        }
+    }
+
+    private void Detection()
+    {
+        Collider2D collision =
+            Physics2D.OverlapCircle((Vector2)transform.position, 
+                _enemyType.detectRange, _enemyType.targetLayer);
+        if (collision != null)
+        {
+            target = collision.gameObject;
+        }
+        else
+        {
+            target = null;
+        }
+    }
+
+    IEnumerator DetectionCoroutine()
+    {
+        yield return new WaitForSeconds(_enemyType.detectionDelay);
+        Detection();
+        StartCoroutine(DetectionCoroutine());
     }
 }

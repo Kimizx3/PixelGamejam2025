@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     
     private Vector2 _movementInput;
     private Vector2 _pointerInput;
+    private bool _skillInput;
     private bool _attackInput;
     private AgentMover _playerMovement;
     private WeaponParent _weaponParent;
@@ -35,6 +36,7 @@ public class PlayerInput : MonoBehaviour
         HandleInput();
         _playerMovement.MovementInput = _movementInput;
     }
+    
 
     private void OnEnable()
     {

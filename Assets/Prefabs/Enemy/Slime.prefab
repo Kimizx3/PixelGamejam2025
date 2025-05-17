@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1073603409089477615}
   - component: {fileID: 5920330412101747327}
   - component: {fileID: 4736058373242761828}
+  - component: {fileID: 852156637408242985}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -101,16 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  goldData: {fileID: 11400000, guid: 7f43bec3dd10a53489de4d0675644086, type: 2}
+  shardType: {fileID: 11400000, guid: e84536fe06f85c442b0000c44e52ef04, type: 2}
   enemyType: {fileID: 11400000, guid: c0fa4a8dc25a4594b8d97f7f27f67afc, type: 2}
   player: {fileID: 0}
-  sightRadius: 5
-  loseRadius: 7
+  sightRadius: 100
+  loseRadius: 0
   speed: 2
-  wanderRadius: 3
-  wanderTime: 2
-  idleTime: 1
-  maxHealth: 4
+  wanderRadius: 0
+  wanderTime: 0
+  idleTime: 0
 --- !u!50 &1073603409089477615
 Rigidbody2D:
   serializedVersion: 4
@@ -137,7 +137,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!95 &5920330412101747327
 Animator:
   serializedVersion: 5
@@ -194,3 +194,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0.010011077, y: 1.1042361}
   m_Size: {x: 1.7408235, y: 2.2571073}
   m_Direction: 0
+--- !u!114 &852156637408242985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860889414194250533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb53e3f3e6f185d448787a9a3b48c25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 11400000, guid: a0e6e32120559be49aeebc88d6b35033, type: 2}

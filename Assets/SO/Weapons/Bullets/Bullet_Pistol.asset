@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b23cf43213779846aca4e53c0d8bc87, type: 3}
-  m_Name: Gold_Basic
+  m_Script: {fileID: 11500000, guid: 709014546cf025a4689ac04961dd6c54, type: 3}
+  m_Name: Bullet_Pistol
   m_EditorClassIdentifier: 
-  goldAmount: 10
-  basicGoldPrefab: {fileID: 7489388547583605492, guid: d572dc01b632c19448460d8ed786bb77, type: 3}
+  bulletPrefab: {fileID: 3223601089075699345, guid: 950f57e965c19234e8b336fb9cbe296d, type: 3}
+  bulletSpeed: 20
+  bulletLifeTime: 5
+  damage: 1
+  isPiercing: 0
+  stunDuration: 0

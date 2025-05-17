@@ -7,12 +7,17 @@ public class WeaponParent : MonoBehaviour
 {
     [SerializeField] private SO_BulletType bulletType;
     [SerializeField] private Transform firePoint;
-    private Animator _animator;
+    //public SO_WeaponType weaponType;
+    
+    [Header("Internal State")]
     private bool _attackLock;
+    private float nextFireTime = 0f;
+    private Animator _animator;
     
     public SpriteRenderer playerRenderer, weaponRenderer;
     public Vector2 PointerPosition { get; set; }
     public float delay = 0.3f;
+    public float fireRate = 1f;
     
     public bool IsAttacking { get; private set; }
 
@@ -60,14 +65,15 @@ public class WeaponParent : MonoBehaviour
 
     public void Attack()
     {
-        if (_attackLock)
+        if (_attackLock || Time.time < nextFireTime)
         {
             return;
         }
         _animator.SetTrigger("Attack");
         IsAttacking = true;
         _attackLock = true;
-        
+
+        nextFireTime = Time.time + (1f / fireRate);
         
         Vector2 shootDirection = (PointerPosition - (Vector2)firePoint.position).normalized;
         GameObject bullets = 

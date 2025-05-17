@@ -7,6 +7,7 @@ public class SO_EnemyType : ScriptableObject
 {
     [Header("Basic Settings")]
     public float moveSpeed = 3f;
+    public int maxHealth = 4;
     
     [Header("Combat Settings")]
     public float detectRange = 10f;

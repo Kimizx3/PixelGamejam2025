@@ -7,6 +7,9 @@ public class SO_BulletType : ScriptableObject
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
     public float bulletLifeTime = 5f;
-    public int pistolBulletDamage = 1;
+    public int damage = 1;
     public bool isPiercing = false;
+
+    [Header("Effects")] 
+    public float stunDuration = 3f;
 }

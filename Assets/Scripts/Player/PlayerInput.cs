@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     //[SerializeField] private Animator animator;
+    [Header("Input Reference")]
     [SerializeField] private InputActionReference movement;
     [SerializeField] private InputActionReference attack;
     [SerializeField] private InputActionReference pointerPosition;
@@ -56,7 +57,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
         _weaponParent.PositioningWeapon();
-        _weaponParent.Attack();
+        _weaponParent.Fire();
     }
 
     private void HandleInput()

@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 5920330412101747327}
   - component: {fileID: 4736058373242761828}
   - component: {fileID: 852156637408242985}
-  m_Layer: 0
+  - component: {fileID: -6753542535451420589}
+  m_Layer: 8
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -106,11 +107,6 @@ MonoBehaviour:
   enemyType: {fileID: 11400000, guid: c0fa4a8dc25a4594b8d97f7f27f67afc, type: 2}
   player: {fileID: 0}
   sightRadius: 100
-  loseRadius: 0
-  speed: 2
-  wanderRadius: 0
-  wanderTime: 0
-  idleTime: 0
 --- !u!50 &1073603409089477615
 Rigidbody2D:
   serializedVersion: 4
@@ -207,3 +203,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: {fileID: 11400000, guid: a0e6e32120559be49aeebc88d6b35033, type: 2}
+--- !u!114 &-6753542535451420589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860889414194250533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0e066d1217bed44bf8630c9e9c001d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1

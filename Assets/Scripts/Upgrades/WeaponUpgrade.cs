@@ -6,14 +6,37 @@ using UnityEngine;
 
 public class WeaponUpgrade : MonoBehaviour
 {
-    public SO_WeaponType weaponType;
+    [SerializeField] private SO_WeaponType weaponType;
+    [SerializeField] private SO_BulletType bulletType;
+    private SO_BulletType runtimeBulletType;
+    
     private int damage;
     private float fireRate;
     private float bulletSize;
     private float reloadTime;
     private int projectiles;
+    
+    
+    public static WeaponUpgrade Instance { get; private set; }
 
     private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        runtimeBulletType = Instantiate(bulletType);
+        runtimeBulletType.bulletPrefab = bulletType.bulletPrefab;
+        
+        InitializeWeaponStats();
+    }
+    
+    public void InitializeWeaponStats()
     {
         damage = weaponType.baseDamageAmount;
         fireRate = weaponType.fireRate;
@@ -52,5 +75,20 @@ public class WeaponUpgrade : MonoBehaviour
     {
         projectiles += amount;
         Debug.Log($"Weapon upgraded: +{amount} Projectiles (Total: {projectiles})");
+    }
+
+    public int Damage => damage;
+    public float FireRate => fireRate;
+    public float BulletSize => bulletSize;
+    public float ReloadTime => reloadTime;
+    public int Projectiles => projectiles;
+
+    public SO_BulletType GetBulletType() => runtimeBulletType;
+
+
+    public void ResetToDefault()
+    {
+        InitializeWeaponStats();
+        Debug.Log("Weapon stats reset to default.");
     }
 }

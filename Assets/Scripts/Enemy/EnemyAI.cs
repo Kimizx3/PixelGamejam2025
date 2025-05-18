@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
-        int goldAmount = Random.Range(_enemyType.minGold, _enemyType.maxGold + 1);
+        int goldAmount = _enemyType.exp;
         for (int i = 0; i < goldAmount; i++)
         {
             Vector2 randomOffset = Random.insideUnitCircle * 0.5f;

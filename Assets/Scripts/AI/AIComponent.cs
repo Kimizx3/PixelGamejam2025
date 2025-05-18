@@ -41,7 +41,7 @@ public class AIComponent : MonoBehaviour
     {
         isDead = true;
         _animator.SetTrigger("Die");
-        int goldAmount = Random.Range(enemyType.minGold, enemyType.maxGold + 1);
+        int goldAmount = enemyType.exp;
         StartCoroutine(PlayDeathAnim());
         for (int i = 0; i < goldAmount; i++)
         {

@@ -21,7 +21,7 @@ public class Agent : MonoBehaviour
 
     public void PerformAttack()
     {
-        _weaponParent.Attack();
+        _weaponParent.Fire();
     }
 
     private void Awake()

@@ -22,28 +22,31 @@ public class Slime : MonoBehaviour
     public SO_EnemyType enemyType;
 
     [Header("Detection Settings")] 
-    public Transform player;
 
     [SerializeField] private float sightRadius = 100f;
-    [SerializeField] private float speed = 5f;
 
     private Rigidbody2D rb;
-    private Vector2 initPosition;
     private Vector2 wanderTarget;
-    private bool isWandering = false;
+    private Animator _animator;
+
+    private Transform player;
     
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
         aiComponent = GetComponent<AIComponent>();
-        initPosition = transform.position;
-        player = GameManager.Instance.PlayerTransform;
     }
 
     private void Update()
     {
         HandleStates();
+    }
+
+    public void Initialize(Transform playerTransform)
+    {
+        player = playerTransform;
     }
 
     private void HandleStates()
@@ -64,7 +67,7 @@ public class Slime : MonoBehaviour
     {
         if (player != null)
         {
-            MoveTowards(player.position);
+            MoveTowards(player.transform.position);
         }
     }
 
@@ -81,17 +84,5 @@ public class Slime : MonoBehaviour
         {
             currentState = AIState.Chase;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, sightRadius);
-        
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(initPosition, 0.3f);
-        
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(wanderTarget, 0.3f);
     }
 }

@@ -11,7 +11,7 @@ public class PlayerLevel : MonoBehaviour
     public int experienceToNextLevel = 100;
     public Action<int> OnLevelUp;
 
-    [FormerlySerializedAs("weaponUpgradeUI")] [SerializeField] private WeaponUpgradeUI weaponWeaponUpgradeUI;
+    [SerializeField] private WeaponUpgradeUI weaponUpgradeUI;
 
     private void Awake()
     {
@@ -38,7 +38,8 @@ public class PlayerLevel : MonoBehaviour
             else
             {
                 // TriggerUpgradeSelection();
-                weaponWeaponUpgradeUI.ShowUpgradeOptions();
+                weaponUpgradeUI.gameObject.SetActive(true);
+                weaponUpgradeUI.ShowUpgradeOptions();
                 Debug.Log("Upgrade selection time!");
             }
         }
@@ -47,6 +48,10 @@ public class PlayerLevel : MonoBehaviour
     private void HandleLevelUp(int level)
     {
         Debug.Log($"Player leveled up! Current Level: {level}");
+        if (weaponUpgradeUI != null)
+        {
+            weaponUpgradeUI.ShowUpgradeOptions();
+        }
     }
 
     public int GetCurrentExperience()

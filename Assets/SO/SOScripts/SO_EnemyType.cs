@@ -17,6 +17,5 @@ public class SO_EnemyType : ScriptableObject
     
     [Header("Drop Settings")]
     public float dropChance = 0.5f;
-    public int minGold = 1;
-    public int maxGold = 5;
+    public int exp = 1;
 }

@@ -9,7 +9,7 @@ public class Shards : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PickUp"))
         {
             LevelManager.PlayerLevelManager.AddExperienceToUI(shard.shardAmount);
             FindObjectOfType<PlayerLevel>().AddExperience(shard.shardAmount);

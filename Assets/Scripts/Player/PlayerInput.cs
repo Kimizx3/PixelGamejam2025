@@ -7,23 +7,26 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     //[SerializeField] private Animator animator;
+    [Header("Input Reference")]
     [SerializeField] private InputActionReference movement;
     [SerializeField] private InputActionReference attack;
     [SerializeField] private InputActionReference pointerPosition;
     
     private Vector2 _movementInput;
     private Vector2 _pointerInput;
+    private bool _skillInput;
     private bool _attackInput;
-    private Movement _playerMovement;
+    private AgentMover _playerMovement;
     private WeaponParent _weaponParent;
     private Camera _cam;
+    
     //private WeaponParent weaponParent;
     
     
     private void Awake()
     {
         //_cam = Camera.main;
-        _playerMovement = GetComponent<Movement>();
+        _playerMovement = GetComponent<AgentMover>();
         _weaponParent = GetComponentInChildren<WeaponParent>();
     }
 
@@ -35,6 +38,7 @@ public class PlayerInput : MonoBehaviour
         HandleInput();
         _playerMovement.MovementInput = _movementInput;
     }
+    
 
     private void OnEnable()
     {
@@ -54,7 +58,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
         _weaponParent.PositioningWeapon();
-        _weaponParent.OnShootPerformed();
+        _weaponParent.Fire();
     }
 
     private void HandleInput()

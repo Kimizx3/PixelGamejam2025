@@ -72,11 +72,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         GameManager.Instance.GameOver();
         gameObject.SetActive(false);
-        var spawner = FindObjectOfType<EnemySpawner>();
-        if (spawner != null)
-        {
-            spawner.StopSpawning();
-        }
+        EnemySpawner.Instance.StopSpawning();
     }
 
     private IEnumerator PlayDeathAnim()

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2d7dc76c168bdb4e93da1f87e35a4a9, type: 3}
-  m_Name: Enemy_Slime
+  m_Name: Enemy_Boss1
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  maxHealth: 2
+  maxHealth: 12
   damage: 1
-  detectRange: 10
-  attackRange: 2
+  detectRange: 50
+  attackRange: 50
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -26,4 +26,4 @@ MonoBehaviour:
   dropChance: 0.5
   exp: 1
   shard: {fileID: 2612218392391448167, guid: 8d7a7fe2a406a2e41b204aa03458a764, type: 3}
-  deathAnimPlayTime: 0.5
+  deathAnimPlayTime: 1

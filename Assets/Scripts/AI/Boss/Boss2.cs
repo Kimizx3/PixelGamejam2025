@@ -1,52 +1,65 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
-public enum AIState
+public class Boss2 : MonoBehaviour, BaseEnemy
 {
-    Chase,
-    Die
-}
-public class Slime : MonoBehaviour
-{
-    [Header("AI Setting")] 
-    public AIState currentState = AIState.Chase;
-    private AIComponent aiComponent;
-
+    [SerializeField] private AIState currentState = AIState.Chase;
+    
     [Header("Reference Type")] 
-    public SO_ShardType shardType;
     public SO_EnemyType enemyType;
+    private AIComponent _aiComponent;
 
     [Header("Detection Settings")] 
-
     [SerializeField] private float sightRadius = 100f;
+
+    [Header("Attack Setting")]
+    [SerializeField] private GameObject bullets;
 
     private Rigidbody2D rb;
     private Vector2 wanderTarget;
-    private Animator _animator;
-
     private Transform player;
     
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
-        aiComponent = GetComponent<AIComponent>();
+        _aiComponent = GetComponent<AIComponent>();
     }
 
     private void Update()
     {
         HandleStates();
     }
+    
+    public Rigidbody2D GetRigidBody()
+    {
+        return rb;
+    }
+    
+    public void ChangeState(AIState newState)
+    {
+        currentState = newState;
+    }
+
+    public AIState GetCurrentState()
+    {
+        return currentState;
+    }
+
+    public void DisableCollision(CapsuleCollider2D collision)
+    {
+        collision.enabled = false;
+    }
+
+    public void EnableCollision(CapsuleCollider2D collision)
+    {
+        collision.enabled = true;
+    }
 
     public void Initialize(Transform playerTransform)
     {
         player = playerTransform;
+        _aiComponent.ResetState();
     }
 
     private void HandleStates()
@@ -57,8 +70,11 @@ public class Slime : MonoBehaviour
                 DetectPlayer();
                 ChasePlayer();
                 break;
+            case AIState.Attack:
+                PerformAttack();
+                break;
             case AIState.Die:
-                aiComponent.Die();
+                _aiComponent.Die();
                 break;
         }
     }
@@ -67,11 +83,11 @@ public class Slime : MonoBehaviour
     {
         if (player != null)
         {
-            MoveTowards(player.transform.position);
+            MoveToWards(player.transform.position);
         }
     }
 
-    private void MoveTowards(Vector2 target)
+    private void MoveToWards(Vector2 target)
     {
         Vector2 direction = (target - (Vector2)transform.position).normalized;
         rb.velocity = direction * enemyType.moveSpeed;
@@ -82,7 +98,16 @@ public class Slime : MonoBehaviour
         float distance = Vector2.Distance(transform.position, player.position);
         if (distance <= sightRadius)
         {
-            currentState = AIState.Chase;
+            if (distance <= enemyType.attackRange)
+            {
+                ChangeState(AIState.Attack);
+            }
+            ChangeState(AIState.Chase);
         }
+    }
+    
+    public void PerformAttack()
+    {
+        
     }
 }

@@ -19,6 +19,7 @@ public class PlayerInput : MonoBehaviour
     private AgentMover _playerMovement;
     private WeaponParent _weaponParent;
     private Camera _cam;
+    
     //private WeaponParent weaponParent;
     
     

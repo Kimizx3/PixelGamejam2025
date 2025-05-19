@@ -9,6 +9,7 @@ public class SO_WeaponType : ScriptableObject
     public float bulletSize = 10f;
     public float reloadTime = 1f;
     public int projectileCount = 1;
+    public int ammoCount = 1;
 
     public SO_WeaponType Clone()
     {

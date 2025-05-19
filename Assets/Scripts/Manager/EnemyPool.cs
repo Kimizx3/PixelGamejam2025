@@ -13,16 +13,22 @@ public class EnemyPool : MonoBehaviour
         public string tag;
         public GameObject prefab;
         public int size;
+        public int maxActive;
     }
 
     [Header("Object Pools")]
     public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> poolDictionary;
+    public Dictionary<string, Queue<GameObject>> poolDictionary = new ();
+    private Dictionary<string, int> activeCount = new ();
+    private Dictionary<string, Pool> poolLookup = new();
+    
+    private BaseEnemy _baseEnemy;
 
     private Transform playerTranform;
 
     private void Awake()
     {
+        
         if (Instance == null)
         {
             Instance = this;
@@ -32,8 +38,13 @@ public class EnemyPool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        InitializePools();
+    }
 
+    #region Initialization
+
+    private void InitializePools()
+    {
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -46,8 +57,14 @@ public class EnemyPool : MonoBehaviour
             }
             
             poolDictionary.Add(pool.tag, objectPool);
+            activeCount.Add(pool.tag, 0);
+            poolLookup.Add(pool.tag, pool);
         }
     }
+
+    #endregion
+
+    #region Spawn Logic
 
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
@@ -56,21 +73,44 @@ public class EnemyPool : MonoBehaviour
             return null;
         }
 
+        if (activeCount[tag] >= poolLookup[tag].maxActive)
+        {
+            return null;
+        }
+
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
-        objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.SetActive(true);
 
-        Slime slime = objectToSpawn.GetComponent<Slime>();
-        if (slime != null && playerTranform != null)
+        BaseEnemy baseEnemy = objectToSpawn.GetComponent<BaseEnemy>();
+
+        if (baseEnemy != null && playerTranform != null)
         {
-            slime.Initialize(playerTranform);
+            baseEnemy.Initialize(playerTranform);
         }
-        
+
+        activeCount[tag]++;
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
+
+    #endregion
+
+    #region Return Logic
+
+    public void ReturnToPool(GameObject objectToReturn, string tag)
+    {
+        if (activeCount.ContainsKey(tag))
+        {
+            activeCount[tag] = Mathf.Max(0, activeCount[tag] - 1);
+            objectToReturn.SetActive(false);
+            Debug.Log($"[EnemyPool] return {tag} to pool. Active: {activeCount[tag]}");
+        }
+    }
+
+    #endregion
 
     public void SetPlayerTransform(Transform player)
     {

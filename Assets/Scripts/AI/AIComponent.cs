@@ -11,7 +11,8 @@ public class AIComponent : MonoBehaviour
 
     
     private Animator _animator;
-    private Slime slime;
+    private BaseEnemy _enemy;
+    private CapsuleCollider2D _capsuleCollider2D;
     private int stunDuration;
     private int currentHealth;
     private bool isStunning = false;
@@ -19,8 +20,9 @@ public class AIComponent : MonoBehaviour
 
     private void Awake()
     {
-        slime = GetComponent<Slime>();
+        _enemy = GetComponent<BaseEnemy>();
         _animator = GetComponent<Animator>();
+        _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         currentHealth = enemyType.maxHealth;
     }
 
@@ -41,41 +43,51 @@ public class AIComponent : MonoBehaviour
     {
         isDead = true;
         _animator.SetTrigger("Die");
-        int goldAmount = enemyType.exp;
+        Instantiate(enemyType.shard, transform.position, Quaternion.identity);
+        _enemy.DisableCollision(_capsuleCollider2D);
+        
         StartCoroutine(PlayDeathAnim());
-        for (int i = 0; i < goldAmount; i++)
-        {
-            Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
-            Instantiate(slime.shardType.shardPrefab,
-                transform.position + (Vector3)randomOffset, Quaternion.identity);
-        }
     }
 
     IEnumerator PlayDeathAnim()
     {
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        _enemy.GetRigidBody().velocity = Vector2.zero;
+        yield return new WaitForSeconds(enemyType.deathAnimPlayTime);
+        string enemyTag = gameObject.tag;
+        EnemyPool.Instance.ReturnToPool(gameObject, enemyTag);
+        gameObject.SetActive(false);
+        isDead = false;
     }
     
     
-    public void Stun(float duration)
-    {
-        if (!isStunning)
-        {
-            isStunning = true;
-            // Play stun coroutine
-            StartCoroutine(StunEffect(stunDuration));
-        }
-    }
+    // public void Stun(float duration)
+    // {
+    //     if (!isStunning)
+    //     {
+    //         isStunning = true;
+    //         // Play stun coroutine
+    //         StartCoroutine(StunEffect(stunDuration));
+    //     }
+    // }
+    //
+    // IEnumerator StunEffect(float duration)
+    // {
+    //     float elapsedTime = 0f;
+    //     while (elapsedTime < duration)
+    //     {
+    //         elapsedTime += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //     isStunning = false;
+    // }
 
-    IEnumerator StunEffect(float duration)
+    public void ResetState()
     {
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        isStunning = false;
+        _enemy.ChangeState(AIState.Chase);
+        currentHealth = enemyType.maxHealth;
+        isDead = false;
+        _enemy.EnableCollision(_capsuleCollider2D);
+        _animator.ResetTrigger("Die");
+        //_animator.Play("Slime_Idle");
     }
 }

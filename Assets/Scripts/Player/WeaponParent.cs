@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,15 +10,25 @@ public class WeaponParent : MonoBehaviour
     [Header("Reference Setting")]
     [SerializeField] private SO_BulletType bulletType;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private SO_WeaponType _weaponType;
     
     [Header("Internal State")]
-    private bool _attackLock;
-    private float nextFireTime = 0.1f;
+    private bool _attackLock = false;
+    private float nextFireTime = 0f;
     private Animator _animator;
+    private AudioSource shootSound;
+    private AudioSource reloadSound;
+
+    private int currentAmmo;
+    private bool isReloading = false;
+    private float lastFireTime = 0f;
     
     public SpriteRenderer playerRenderer, weaponRenderer;
     public Vector2 PointerPosition { get; set; }
     public bool IsAttacking { get; private set; }
+
+    [Header("UI Setting")] 
+    public TextMeshProUGUI ammoDisplay;
     
     public void ResetIsAttacking()
     {
@@ -28,6 +39,12 @@ public class WeaponParent : MonoBehaviour
     {
         _animator = GetComponentInChildren<Animator>();
         // Initialize the runtime instance
+    }
+
+    private void Start()
+    {
+        currentAmmo = _weaponType.ammoCount;
+        UpdateUI();
     }
 
     public void Update()
@@ -60,53 +77,62 @@ public class WeaponParent : MonoBehaviour
         float spreadAngle = 15f;
         float angleStep = WeaponUpgrade.Instance.Projectiles > 1 ? spreadAngle / (WeaponUpgrade.Instance.Projectiles - 1) : 0;
         float startingAngle = -spreadAngle / 2;
-        
-        if (_attackLock || Time.time < nextFireTime)
-        {
-            return;
-        }
-        
-        _animator.SetTrigger("Attack");
-        IsAttacking = true;
-        _attackLock = true;
-        
-        nextFireTime = Time.time + (1f / WeaponUpgrade.Instance.FireRate);
 
-        int middleIndex = WeaponUpgrade.Instance.Projectiles / 2;
-        
-        for (int i = 0; i < WeaponUpgrade.Instance.Projectiles; i++)
+        if (isReloading) return;
+
+        if (currentAmmo > 0)
         {
-            float angle;
-            if (i == middleIndex)
+            _animator.SetTrigger("Attack");
+            IsAttacking = true;
+            _attackLock = true;
+
+            nextFireTime = Time.time + (1f / WeaponUpgrade.Instance.FireRate);
+            lastFireTime = Time.time;
+            currentAmmo--;
+
+            int middleIndex = WeaponUpgrade.Instance.Projectiles / 2;
+
+            for (int i = 0; i < WeaponUpgrade.Instance.Projectiles; i++)
             {
-                angle = 0;
+                float angle;
+                if (i == middleIndex)
+                {
+                    angle = 0;
+                }
+                else
+                {
+                    angle = startingAngle + (i * angleStep);
+                }
+
+                Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+                Vector2 shootDirection = rotation * (PointerPosition - (Vector2)firePoint.position).normalized;
+                GameObject bullets =
+                    Instantiate(WeaponUpgrade.Instance.GetBulletType().bulletPrefab, firePoint.position, rotation);
+
+                bullets.transform.localScale *= WeaponUpgrade.Instance.BulletSize;
+
+                Bullet bullet = bullets.GetComponent<Bullet>();
+
+                if (bullet != null)
+                {
+                    bullet.Initialize(
+                        WeaponUpgrade.Instance.Damage,
+                        bulletType.isPiercing,
+                        bulletType.bulletSpeed,
+                        bulletType.bulletLifeTime);
+                }
+
+                bullet.LaunchBullet(shootDirection, bullet);
+                UpdateUI();
             }
-            else
-            {
-                angle = startingAngle + (i * angleStep);
-            }
-            
-            Quaternion rotation = Quaternion.Euler(0, 0, angle);
-            
-            Vector2 shootDirection = rotation * (PointerPosition - (Vector2)firePoint.position).normalized;
-            GameObject bullets = 
-                Instantiate(WeaponUpgrade.Instance.GetBulletType().bulletPrefab, firePoint.position, rotation);
-            
-            bullets.transform.localScale *= WeaponUpgrade.Instance.BulletSize;
-            
-            Bullet bullet = bullets.GetComponent<Bullet>();
-            
-            if (bullet != null)
-            {
-                bullet.Initialize(
-                    WeaponUpgrade.Instance.Damage,
-                    bulletType.isPiercing,
-                    bulletType.bulletSpeed,
-                    bulletType.bulletLifeTime);
-            }
-            bullet.LaunchBullet(shootDirection, bullet);
         }
-        
+
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+        }
+
         StartCoroutine(DelayAttack());
     }
 
@@ -114,5 +140,24 @@ public class WeaponParent : MonoBehaviour
     {
         yield return new WaitForSeconds(WeaponUpgrade.Instance.ReloadTime);
         _attackLock = false;
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+
+        //if (reloadSound != null) reloadSound.Play();
+        yield return new WaitForSeconds(_weaponType.reloadTime);
+        currentAmmo = _weaponType.ammoCount;
+        isReloading = false;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        if (!isReloading)
+        {
+            ammoDisplay.text = $"Ammo: {currentAmmo} / {_weaponType.ammoCount}";
+        }
     }
 }

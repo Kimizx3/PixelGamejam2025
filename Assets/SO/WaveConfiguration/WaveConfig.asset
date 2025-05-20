@@ -15,50 +15,73 @@ MonoBehaviour:
   Waves:
   - waveName: Wave1
     startTime: 0
+    duration: 30
+    enemySpawns:
+    - enemyTag: Slime
+      amount: 20
+      spawnInterval: 1.5
+  - waveName: Wave2
+    startTime: 30
+    duration: 30
+    enemySpawns:
+    - enemyTag: Slime
+      amount: 35
+      spawnInterval: 1.5
+  - waveName: Wave3
+    startTime: 60
     duration: 60
     enemySpawns:
     - enemyTag: Slime
-      amount: 15
-      spawnInterval: 1.5
-  - waveName: Wave2
-    startTime: 60
+      amount: 40
+      spawnInterval: 1
+    - enemyTag: EliteEnemy
+      amount: 20
+      spawnInterval: 2
+    - enemyTag: RangeAttacker
+      amount: 20
+      spawnInterval: 3
+  - waveName: Wave4
+    startTime: 120
     duration: 120
     enemySpawns:
     - enemyTag: Slime
-      amount: 10
-      spawnInterval: 1.5
+      amount: 30
+      spawnInterval: 0.5
     - enemyTag: EliteEnemy
-      amount: 10
-      spawnInterval: 1.5
+      amount: 80
+      spawnInterval: 1
     - enemyTag: RangeAttacker
-      amount: 5
-      spawnInterval: 2.5
+      amount: 80
+      spawnInterval: 1.5
+  - waveName: Wave5
+    startTime: 240
+    duration: 60
+    enemySpawns:
+    - enemyTag: Slime
+      amount: 20
+      spawnInterval: 0.5
+    - enemyTag: EliteEnemy
+      amount: 50
+      spawnInterval: 1
+    - enemyTag: RangeAttacker
+      amount: 50
+      spawnInterval: 1
+    - enemyTag: FinalBoss
+      amount: 0
+      spawnInterval: 0
   - waveName: Final Boss
     startTime: 300
     duration: 10
     enemySpawns:
     - enemyTag: Slime
-      amount: 0
-      spawnInterval: 1.5
+      amount: 50
+      spawnInterval: 0.5
     - enemyTag: EliteEnemy
-      amount: 0
-      spawnInterval: 2
+      amount: 100
+      spawnInterval: 1
     - enemyTag: RangeAttacker
-      amount: 0
-      spawnInterval: 3
+      amount: 100
+      spawnInterval: 1
     - enemyTag: FinalBoss
       amount: 1
       spawnInterval: 0
-  - waveName: Wave3
-    startTime: 180
-    duration: 120
-    enemySpawns:
-    - enemyTag: Slime
-      amount: 20
-      spawnInterval: 1.5
-    - enemyTag: EliteEnemy
-      amount: 40
-      spawnInterval: 2
-    - enemyTag: RangeAttacker
-      amount: 20
-      spawnInterval: 3

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d7dc76c168bdb4e93da1f87e35a4a9, type: 3}
   m_Name: Enemy_Boss2
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 8
   maxHealth: 8
+  nameTag: EliteEnemy
   damage: 1
   detectRange: 10
   attackRange: 2

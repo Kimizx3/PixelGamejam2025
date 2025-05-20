@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             return;
         }
         
-        Debug.Log($"Player health : {currentHealth}");
+        //Debug.Log($"Player health : {currentHealth}");
         currentHealth -= amount;
         if (healthUI != null)
         {

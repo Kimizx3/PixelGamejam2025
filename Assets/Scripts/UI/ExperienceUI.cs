@@ -11,6 +11,9 @@ public class ExperienceUI : MonoBehaviour
     [SerializeField] private Slider experienceBarFill;
     [SerializeField] private PlayerLevel playerLevel;
 
+    [Header("Time Debug")] [SerializeField]
+    private TextMeshProUGUI timeUI;
+
     private void Start()
     {
         if (playerLevel != null)
@@ -24,10 +27,10 @@ public class ExperienceUI : MonoBehaviour
 
     private void Update()
     {
+        UpDateTime();
         if (playerLevel != null)
         {
             experienceBarFill.value = playerLevel.GetCurrentExperience();
-
         }
     }
 
@@ -40,5 +43,13 @@ public class ExperienceUI : MonoBehaviour
     private void UpdateUI(int level)
     {
         experienceUI.text = $"Hero Level: {level}";
+    }
+
+    private void UpDateTime()
+    {
+        float time = Time.time;
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        timeUI.text = $"Time: {minutes:D2}:{seconds:D2}";
     }
 }

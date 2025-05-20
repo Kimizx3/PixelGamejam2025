@@ -19,6 +19,8 @@ public class PlayerInput : MonoBehaviour
     private AgentMover _playerMovement;
     private WeaponParent _weaponParent;
     private Camera _cam;
+
+    private bool isStunned = false;
     
     //private WeaponParent weaponParent;
     
@@ -83,5 +85,25 @@ public class PlayerInput : MonoBehaviour
             Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y,
                 Mathf.Abs(Camera.main.transform.position.z)));
         return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    public void Stun(float duration)
+    {
+        if (!isStunned)
+        {
+            isStunned = true;
+            StartCoroutine(StunEffect(duration));
+        }
+    }
+
+    private IEnumerator StunEffect(float duration)
+    {
+        movement.action.Disable();
+
+        yield return new WaitForSeconds(duration);
+
+        movement.action.Enable();
+
+        isStunned = false;
     }
 }

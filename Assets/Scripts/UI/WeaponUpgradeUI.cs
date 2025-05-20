@@ -18,18 +18,13 @@ public class WeaponUpgradeUI : MonoBehaviour
     private void Awake()
     {
         CloseUpgradeUI();
-        _upgradeMenus.Add(new UpgradeMenu("Increase Damage", () => weapon.UpgradeDamage(5)));
+        _upgradeMenus.Add(new UpgradeMenu("Increase Damage", () => weapon.UpgradeDamage(3)));
         _upgradeMenus.Add(new UpgradeMenu("Boost Fire Rate", () => weapon.UpgradeFireRate(1.35f)));
         _upgradeMenus.Add(new UpgradeMenu("Increase Bullet Size", () => weapon.UpgradeBulletSize(2)));
-        _upgradeMenus.Add(new UpgradeMenu("Decrease Reload Time", () => weapon.UpgradeReloadTime(0.8f)));
-        _upgradeMenus.Add(new UpgradeMenu("Add Projectile Count", () => weapon.UpgradeProjectiles(2)));
+        _upgradeMenus.Add(new UpgradeMenu("Decrease Reload Time", () => weapon.UpgradeReloadTime(0.65f)));
+        _upgradeMenus.Add(new UpgradeMenu("Add Projectile Count", () => weapon.UpgradeProjectiles(1)));
         
         Debug.Log($"[Upgrade UI] Total Upgrades Available: {_upgradeMenus.Count}");
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void ShowUpgradeOptions()

@@ -35,21 +35,36 @@ public class Bullet : MonoBehaviour
     {
         if (rb != null)
         {
-            Debug.Log($"[LaunchBullet] Applying velocity: {direction * _bulletSpeed}");
+            //Debug.Log($"[LaunchBullet] Applying velocity: {direction * _bulletSpeed}");
             rb.velocity = direction * _bulletSpeed;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("FinalBoss"))
         {
             OnHitEnemy?.Invoke(collision.gameObject);
             AIComponent aiComponent = collision.GetComponent<AIComponent>();
+            Zombie zombie = collision.GetComponent<Zombie>();
+            ZombieFlag flag = collision.GetComponent<ZombieFlag>();
+            FinalBoss finalBoss = collision.GetComponent<FinalBoss>();
+            if (zombie != null)
+            {
+                zombie.TakeDamage(_damage);
+            }
+            if (finalBoss != null)
+            {
+                finalBoss.TakeDamage(_damage);
+            }
+            if (flag != null)
+            {
+                flag.TakeDamage(_damage);
+            }
             if (aiComponent != null)
             {
                 aiComponent.TakeDamage(_damage);
-                Debug.Log($"Bullet hit {collision.name} and dealt {_damage} damage.");
+                //Debug.Log($"Bullet hit {collision.name} and dealt {_damage} damage.");
             }
             if (!_isPiercing)
             {

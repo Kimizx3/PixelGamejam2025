@@ -18,9 +18,10 @@ public class EnemyPool : MonoBehaviour
 
     [Header("Object Pools")]
     public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> poolDictionary = new ();
-    private Dictionary<string, int> activeCount = new ();
-    private Dictionary<string, Pool> poolLookup = new();
+
+    private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<string, int> activeCount;
+    // private Dictionary<string, Pool> poolLookup = new();
     
     private BaseEnemy _baseEnemy;
 
@@ -37,6 +38,9 @@ public class EnemyPool : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        activeCount = new Dictionary<string, int>();
 
         InitializePools();
     }
@@ -58,7 +62,6 @@ public class EnemyPool : MonoBehaviour
             
             poolDictionary.Add(pool.tag, objectPool);
             activeCount.Add(pool.tag, 0);
-            poolLookup.Add(pool.tag, pool);
         }
     }
 
@@ -73,14 +76,21 @@ public class EnemyPool : MonoBehaviour
             return null;
         }
 
-        if (activeCount[tag] >= poolLookup[tag].maxActive)
+        if (poolDictionary[tag].Count == 0)
         {
-            return null;
+            Pool poolConfig = pools.Find(p => p.tag == tag);
+            if (activeCount[tag] < poolConfig.maxActive)
+            {
+                GameObject obj = Instantiate(poolConfig.prefab);
+                obj.SetActive(false);
+                poolDictionary[tag].Enqueue(obj);
+            }
         }
 
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        
         objectToSpawn.SetActive(true);
 
         BaseEnemy baseEnemy = objectToSpawn.GetComponent<BaseEnemy>();
@@ -91,8 +101,6 @@ public class EnemyPool : MonoBehaviour
         }
 
         activeCount[tag]++;
-        poolDictionary[tag].Enqueue(objectToSpawn);
-
         return objectToSpawn;
     }
 
@@ -106,6 +114,9 @@ public class EnemyPool : MonoBehaviour
         {
             activeCount[tag] = Mathf.Max(0, activeCount[tag] - 1);
             objectToReturn.SetActive(false);
+            
+            poolDictionary[tag].Enqueue(objectToReturn);
+            
             Debug.Log($"[EnemyPool] return {tag} to pool. Active: {activeCount[tag]}");
         }
     }

@@ -8,6 +8,7 @@ public class SO_EnemyType : ScriptableObject
     [Header("Basic Settings")]
     public float moveSpeed = 3f;
     public int maxHealth = 4;
+    public string nameTag;
 
     [Header("Combat Settings")] 
     public int damage = 1;

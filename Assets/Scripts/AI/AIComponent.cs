@@ -53,10 +53,14 @@ public class AIComponent : MonoBehaviour
     {
         _enemy.GetRigidBody().velocity = Vector2.zero;
         yield return new WaitForSeconds(enemyType.deathAnimPlayTime);
-        string enemyTag = gameObject.tag;
-        EnemyPool.Instance.ReturnToPool(gameObject, enemyTag);
+        Invoke(nameof(ReturnToPool), 1.0f);
         gameObject.SetActive(false);
         isDead = false;
+    }
+
+    private void ReturnToPool()
+    {
+        EnemyPool.Instance.ReturnToPool(gameObject, enemyType.nameTag);
     }
     
     

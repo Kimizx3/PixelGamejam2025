@@ -21,7 +21,6 @@ public class Slime : MonoBehaviour, BaseEnemy
     [SerializeField] private float sightRadius = 100f;
 
     private Rigidbody2D rb;
-    private Vector2 wanderTarget;
 
     private Transform player;
     

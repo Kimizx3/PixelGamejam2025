@@ -22,8 +22,11 @@ public class SO_WaveConfig : ScriptableObject
         public float duration; // How long this wave lasts
         public List<EnemySpawn> enemySpawns;
     }
-
     
-
     public List<Wave> Waves;
+
+    public bool IsWaveActive(Wave wave, float currentTime)
+    {
+        return currentTime >= wave.startTime && currentTime < wave.startTime + wave.duration;
+    }
 }

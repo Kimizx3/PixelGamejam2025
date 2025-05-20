@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public static EnemySpawner Instance { get; private set; }
     private float elapsedTime = 0f;
     private bool isSpawning = true;
+    private HashSet<string> activeWaves = new HashSet<string>();
     
     [Header("Spawn Boundaries")]
     private Camera mainCamera;
@@ -62,8 +63,13 @@ public class EnemySpawner : MonoBehaviour
 
             foreach (var wave in waveConfig.Waves)
             {
-                if (elapsedTime >= wave.startTime && elapsedTime < wave.startTime + wave.duration)
+                string waveKey = wave.waveName + wave.startTime;
+                
+                if (!activeWaves.Contains(waveKey) && waveConfig.IsWaveActive(wave, elapsedTime))
                 {
+                    Debug.Log($"[Enemy Spawner] Starting Wave: {wave.waveName} at {elapsedTime} seconds.");
+                    activeWaves.Add(waveKey);
+                    
                     foreach (var enemySpawn in wave.enemySpawns)
                     {
                         StartCoroutine(SpawnEnemy(enemySpawn));
@@ -79,8 +85,12 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < enemySpawn.amount; i++)
         {
+            
             Vector3 spawnPosition = GetRandomSpawnPosition();
-            EnemyPool.Instance.SpawnFromPool(enemySpawn.enemyTag, spawnPosition, Quaternion.identity);
+            GameObject enemy = EnemyPool.Instance.SpawnFromPool(enemySpawn.enemyTag, spawnPosition, Quaternion.identity);
+            
+            //Debug.Log($"[Enemy Spawner] spawned {enemySpawn.enemyTag} at {spawnPosition}");
+            
             yield return new WaitForSeconds(enemySpawn.spawnInterval);
         }
     }
@@ -95,8 +105,7 @@ public class EnemySpawner : MonoBehaviour
         float rightBound = cameraPos.x + width / 2 + spawnDistanceFromCamera;
         float topBound = cameraPos.y + height / 2 + spawnDistanceFromCamera;
         float bottomBound = cameraPos.y - height / 2 - spawnDistanceFromCamera;
-
-        Vector3 spawnPosition = Vector3.zero;
+        
         int edge = Random.Range(0, 4);
 
         return edge switch

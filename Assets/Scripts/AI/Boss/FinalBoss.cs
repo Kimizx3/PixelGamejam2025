@@ -68,10 +68,10 @@ public class FinalBoss : MonoBehaviour
         {
             if (_zombieFlag == null)
             {
-                Debug.Log("[Final Boss] Summoning Zombie Flag");
+                //Debug.Log("[Final Boss] Summoning Zombie Flag");
                 GameObject flag = 
                     Instantiate(zombieFlagPrefab, 
-                        transform.position + Vector3.right * 2, 
+                        transform.position + Vector3.right * 8, 
                         Quaternion.identity);
                 _zombieFlag = flag.GetComponent<ZombieFlag>();
 
@@ -89,12 +89,14 @@ public class FinalBoss : MonoBehaviour
     private IEnumerator CastShockwave()
     {
         canShockwave = false;
-        Debug.Log("[Final Boss] Summoning Shockwave");
+        //Debug.Log("[Final Boss] Summoning Shockwave");
 
         GameObject shockwave = Instantiate(shockwavePrefab, transform.position, Quaternion.identity);
 
         Vector3 dir = (player.position - transform.position).normalized;
         shockwave.GetComponent<Rigidbody2D>().velocity = dir * 5f;
+        
+        _animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(shockwaveCooldown);
         canShockwave = true;
@@ -103,7 +105,7 @@ public class FinalBoss : MonoBehaviour
     private IEnumerator ShootBulletInCircle()
     {
         canShootCircle = false;
-        Debug.Log("[Final Boss] Shooting bullets in circle");
+        //Debug.Log("[Final Boss] Shooting bullets in circle");
 
         float angleStep = 360f / bulletsPerCircle;
 
@@ -114,6 +116,7 @@ public class FinalBoss : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody2D>().velocity = bulletDir * bulletSpeed;
         }
+        _animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(bulletCircleCooldown);
 
@@ -145,5 +148,7 @@ public class FinalBoss : MonoBehaviour
         _capsuleCollider2D.enabled = false;
         yield return new WaitForSeconds(0.1f);
         gameObject.SetActive(false);
+        GameManager.Instance?.ShowVictoryScreen();
+        EnemySpawner.Instance?.StopSpawning();
     }
 }

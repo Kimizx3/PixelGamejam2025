@@ -12,7 +12,7 @@ public class BattlefieldManager : MonoBehaviour
     [SerializeField] private float size = 30f;
 
     private List<GameObject> barriers = new List<GameObject>();
-    private bool isBattlefieldActive = false;
+    //private bool isBattlefieldActive = false;
     private Transform bossTransform;
 
     private void Start()

@@ -17,4 +17,4 @@ MonoBehaviour:
   bulletSize: 1
   reloadTime: 1.5
   projectileCount: 1
-  ammoCount: 6
+  ammoCount: 12

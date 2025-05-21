@@ -33,21 +33,23 @@ public class PlayerLevel : MonoBehaviour
             if (currentLevel % 5 == 0)
             {
                 // TriggerSkillSelection();
-                Debug.Log("Skill selection time!");
+                //Debug.Log("Skill selection time!");
+                PlayerHealth playerHealth = GetComponent<PlayerHealth>();
+                playerHealth.currentHealth++;
             }
             else
             {
                 // TriggerUpgradeSelection();
                 weaponUpgradeUI.gameObject.SetActive(true);
                 weaponUpgradeUI.ShowUpgradeOptions();
-                Debug.Log("Upgrade selection time!");
+                //Debug.Log("Upgrade selection time!");
             }
         }
     }
 
     private void HandleLevelUp(int level)
     {
-        Debug.Log($"Player leveled up! Current Level: {level}");
+        //Debug.Log($"Player leveled up! Current Level: {level}");
         if (weaponUpgradeUI != null)
         {
             weaponUpgradeUI.ShowUpgradeOptions();

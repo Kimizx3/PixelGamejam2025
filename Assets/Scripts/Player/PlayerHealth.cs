@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
@@ -13,12 +14,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public SpriteRenderer playerSprite;
     
     // Private Section
-    private int currentHealth;
+    public int currentHealth;
     private bool isInvincible = false;
+    [ReadOnly] public bool isDead;
     
 
     private void Awake()
     {
+        isDead = false;
         currentHealth = player.maxHealth;
         if (healthUI != null)
         {
@@ -34,12 +37,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
         
         //Debug.Log($"Player health : {currentHealth}");
-        currentHealth -= amount;
+        if (!isDead)
+        {
+            currentHealth -= amount;
+        }
         if (healthUI != null)
         {
             healthUI.UpdateHearts(currentHealth);
         }
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -70,6 +76,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     
     private void Die()
     {
+        isDead = true;
+        
         GameManager.Instance.GameOver();
         gameObject.SetActive(false);
         EnemySpawner.Instance.StopSpawning();

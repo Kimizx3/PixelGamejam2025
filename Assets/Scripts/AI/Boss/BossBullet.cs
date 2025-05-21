@@ -19,7 +19,7 @@ public class BossBullet : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log($"Bullet hit player. Damage: {enemy.damage}");
+            //Debug.Log($"Bullet hit player. Damage: {enemy.damage}");
             _playerHealth.TakeDamage(enemy.damage);
             Destroy(gameObject);
         }

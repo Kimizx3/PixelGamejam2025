@@ -67,7 +67,7 @@ public class EnemySpawner : MonoBehaviour
                 
                 if (!activeWaves.Contains(waveKey) && waveConfig.IsWaveActive(wave, elapsedTime))
                 {
-                    Debug.Log($"[Enemy Spawner] Starting Wave: {wave.waveName} at {elapsedTime} seconds.");
+                    //Debug.Log($"[Enemy Spawner] Starting Wave: {wave.waveName} at {elapsedTime} seconds.");
                     activeWaves.Add(waveKey);
                     
                     foreach (var enemySpawn in wave.enemySpawns)

@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4619088345844782659}
-  - component: {fileID: 9212768798181031491}
   - component: {fileID: 1083899401990425839}
   - component: {fileID: 5058005167831566725}
+  - component: {fileID: 5372971898074158461}
+  - component: {fileID: 3930928641461576700}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34,20 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9212768798181031491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264186043316311213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898672b2b253fcf428883a14751ecca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverCanvas: {fileID: 0}
-  mainMenuCanvas: {fileID: 0}
 --- !u!114 &1083899401990425839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09416850d6348d74481daa7726a452d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab:
-  - {fileID: 3860889414194250533, guid: 9329f7cad98575344830ecac16a45ec3, type: 3}
-  spawnInterval: 1
+  waveConfig: {fileID: 11400000, guid: a3052a56a1d7b4e4e8aced9aea399e77, type: 2}
   spawnDistanceFromCamera: 2
 --- !u!114 &5058005167831566725
 MonoBehaviour:
@@ -79,3 +64,48 @@ MonoBehaviour:
   experienceUI: {fileID: 0}
   experienceBarFill: {fileID: 0}
   playerLevel: {fileID: 0}
+  timeUI: {fileID: 0}
+--- !u!114 &5372971898074158461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264186043316311213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d39f32188d01d4e97656daa48cbf81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: Slime
+    prefab: {fileID: 3860889414194250533, guid: 9329f7cad98575344830ecac16a45ec3, type: 3}
+    size: 50
+    maxActive: 100
+  - tag: EliteEnemy
+    prefab: {fileID: 6063979796133930557, guid: 7bb048902f98dd849adc746b62f5d8e5, type: 3}
+    size: 100
+    maxActive: 200
+  - tag: RangeAttacker
+    prefab: {fileID: 7037523065698183692, guid: 01359a7bf4a9bf8409673c3eb91a4063, type: 3}
+    size: 100
+    maxActive: 200
+  - tag: FinalBoss
+    prefab: {fileID: 3432418646365294436, guid: b6574206cead63e459ef4a6fd599ec18, type: 3}
+    size: 1
+    maxActive: 1
+--- !u!114 &3930928641461576700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264186043316311213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cd10b510ddf4341b858510b56e1547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battlefieldPrefab: {fileID: 7567885046111531868, guid: 28435e775c9c9744882f80c5823c9685, type: 3}
+  activationTime: 3
+  size: 150

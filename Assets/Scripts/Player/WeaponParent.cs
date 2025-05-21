@@ -18,6 +18,7 @@ public class WeaponParent : MonoBehaviour
     private Animator _animator;
     private AudioSource shootSound;
     private AudioSource reloadSound;
+    private PlayerHealth _playerHealth;
 
     private int currentAmmo;
     private bool isReloading = false;
@@ -38,6 +39,7 @@ public class WeaponParent : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
+        _playerHealth = GetComponentInParent<PlayerHealth>();
         // Initialize the runtime instance
     }
 
@@ -74,6 +76,7 @@ public class WeaponParent : MonoBehaviour
 
     public void Fire()
     {
+        if (_playerHealth.isDead) { return; }
         float spreadAngle = 15f;
         float angleStep = WeaponUpgrade.Instance.Projectiles > 1 ? spreadAngle / (WeaponUpgrade.Instance.Projectiles - 1) : 0;
         float startingAngle = -spreadAngle / 2;
@@ -82,6 +85,7 @@ public class WeaponParent : MonoBehaviour
 
         if (currentAmmo > 0)
         {
+            AudioManager.Instance.PlaySound("fire");
             _animator.SetTrigger("Attack");
             IsAttacking = true;
             _attackLock = true;
@@ -124,12 +128,14 @@ public class WeaponParent : MonoBehaviour
                 }
 
                 bullet.LaunchBullet(shootDirection, bullet);
+                //AudioManager.Instance.PlaySound("bulletDrop");
                 UpdateUI();
             }
         }
 
         if (currentAmmo <= 0)
         {
+            AudioManager.Instance.PlaySound("reload");
             StartCoroutine(Reload());
         }
 

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d7dc76c168bdb4e93da1f87e35a4a9, type: 3}
   m_Name: Enemy_Boss1
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 4
   maxHealth: 12
   nameTag: RangeAttacker
   damage: 1
-  detectRange: 25
+  detectRange: 20
   attackRange: 8
   targetLayer:
     serializedVersion: 2

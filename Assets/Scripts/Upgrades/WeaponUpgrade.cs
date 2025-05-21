@@ -49,32 +49,32 @@ public class WeaponUpgrade : MonoBehaviour
     public void UpgradeDamage(int amount)
     {
         damage += amount;
-        Debug.Log($"Weapon upgraded: +{amount} Damage (Total: {damage})");
+        //Debug.Log($"Weapon upgraded: +{amount} Damage (Total: {damage})");
     }
     
     public void UpgradeFireRate(float amount)
     {
         fireRate *= amount;
-        Debug.Log($"Weapon upgraded: +{amount} Fire Rate (Total: {fireRate})");
+        //Debug.Log($"Weapon upgraded: +{amount} Fire Rate (Total: {fireRate})");
     }
 
     public void UpgradeBulletSize(float amount)
     {
         // TODO: Increase actual bullet size
         bulletSize += amount;
-        Debug.Log($"Weapon upgraded: +{amount} Bullet Size (Total: {bulletSize})");
+        //Debug.Log($"Weapon upgraded: +{amount} Bullet Size (Total: {bulletSize})");
     }
 
     public void UpgradeReloadTime(float amount)
     {
         reloadTime *= amount;
-        Debug.Log($"Weapon upgraded: +{amount} Reload Time (Total: {reloadTime})");
+        //Debug.Log($"Weapon upgraded: +{amount} Reload Time (Total: {reloadTime})");
     }
 
     public void UpgradeProjectiles(int amount)
     {
         projectiles += amount;
-        Debug.Log($"Weapon upgraded: +{amount} Projectiles (Total: {projectiles})");
+        //Debug.Log($"Weapon upgraded: +{amount} Projectiles (Total: {projectiles})");
     }
 
     public int Damage => damage;
@@ -89,6 +89,6 @@ public class WeaponUpgrade : MonoBehaviour
     public void ResetToDefault()
     {
         InitializeWeaponStats();
-        Debug.Log("Weapon stats reset to default.");
+        //Debug.Log("Weapon stats reset to default.");
     }
 }

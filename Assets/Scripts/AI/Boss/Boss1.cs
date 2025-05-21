@@ -12,7 +12,7 @@ public class Boss1 : MonoBehaviour, BaseEnemy
     public GameObject aimPoint;
 
     [Header("Detection Settings")] 
-    [SerializeField] private float sightRadius = 100f;
+    //[SerializeField] private float sightRadius = 100f;
 
     [Header("Attack Setting")]
     [SerializeField] private GameObject bulletPrefab;
@@ -143,11 +143,5 @@ public class Boss1 : MonoBehaviour, BaseEnemy
         {
             bulletRigidbody.velocity = direction * bulletSpeed;
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, enemyType.attackRange);
     }
 }

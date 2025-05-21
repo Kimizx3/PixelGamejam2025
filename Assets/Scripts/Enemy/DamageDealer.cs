@@ -14,7 +14,7 @@ public class DamageDealer : MonoBehaviour
             IDamageable damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                Debug.Log($"Dealt damage to player: {damageAmount}");
+                //Debug.Log($"Dealt damage to player: {damageAmount}");
                 damageable.TakeDamage(damageAmount);
             }
         }

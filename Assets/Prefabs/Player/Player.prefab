@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2768643859644706835}
   - component: {fileID: 5202882447262547100}
   - component: {fileID: 5372350956633505041}
+  - component: {fileID: 5956782966838994709}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -209,7 +210,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0053145094, y: -0.29657108}
@@ -245,6 +246,27 @@ MonoBehaviour:
   player: {fileID: 11400000, guid: ed74e3830974ca947984000812c74d67, type: 2}
   healthUI: {fileID: 0}
   playerSprite: {fileID: 5861378422336498688}
+--- !u!95 &5956782966838994709
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861515860653561868}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: df9530e07182ac14ba0d04147c897b90, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4127215635842104433
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +431,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: c8152135dddaf254a995dc4886e9f5ce, type: 2}
     - target: {fileID: 4853576456916303197, guid: ce5d07503db33324bbcd92c0934ce12e, type: 3}
       propertyPath: weaponType
+      value: 
+      objectReference: {fileID: 11400000, guid: b421d6fa9a386fe4a874c431ea694bd0, type: 2}
+    - target: {fileID: 4853576456916303197, guid: ce5d07503db33324bbcd92c0934ce12e, type: 3}
+      propertyPath: _weaponType
       value: 
       objectReference: {fileID: 11400000, guid: b421d6fa9a386fe4a874c431ea694bd0, type: 2}
     - target: {fileID: 4853576456916303197, guid: ce5d07503db33324bbcd92c0934ce12e, type: 3}

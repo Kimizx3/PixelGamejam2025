@@ -15,7 +15,7 @@ public class AIComponent : MonoBehaviour
     private CapsuleCollider2D _capsuleCollider2D;
     private int stunDuration;
     private int currentHealth;
-    private bool isStunning = false;
+    //private bool isStunning = false;
     private bool isDead = false;
 
     private void Awake()

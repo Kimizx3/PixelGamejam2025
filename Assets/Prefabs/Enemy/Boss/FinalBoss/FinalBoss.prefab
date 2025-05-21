@@ -63,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9169267449368095525}
@@ -200,11 +200,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9098634023721377326, guid: e75d4aabcd8e2a84790edb9e56176289, type: 3}
   bulletSpawnPoint: {fileID: 9169267449368095525}
   enemyType: {fileID: 11400000, guid: 8c549fe173461534f9b53296eaf04bc0, type: 2}
-  zombieFlagCooldown: 10
-  shockwaveCooldown: 15
-  bulletCircleCooldown: 8
-  bulletsPerCircle: 16
-  bulletSpeed: 5
+  zombieFlagCooldown: 60
+  shockwaveCooldown: 25
+  bulletCircleCooldown: 15
+  bulletsPerCircle: 32
+  bulletSpeed: 8
 --- !u!95 &-6882381949826289495
 Animator:
   serializedVersion: 5

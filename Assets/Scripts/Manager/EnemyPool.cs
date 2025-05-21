@@ -117,7 +117,7 @@ public class EnemyPool : MonoBehaviour
             
             poolDictionary[tag].Enqueue(objectToReturn);
             
-            Debug.Log($"[EnemyPool] return {tag} to pool. Active: {activeCount[tag]}");
+            //Debug.Log($"[EnemyPool] return {tag} to pool. Active: {activeCount[tag]}");
         }
     }
 

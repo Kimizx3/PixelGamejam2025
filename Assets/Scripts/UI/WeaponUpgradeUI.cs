@@ -24,7 +24,7 @@ public class WeaponUpgradeUI : MonoBehaviour
         _upgradeMenus.Add(new UpgradeMenu("Decrease Reload Time", () => weapon.UpgradeReloadTime(0.65f)));
         _upgradeMenus.Add(new UpgradeMenu("Add Projectile Count", () => weapon.UpgradeProjectiles(1)));
         
-        Debug.Log($"[Upgrade UI] Total Upgrades Available: {_upgradeMenus.Count}");
+        //Debug.Log($"[Upgrade UI] Total Upgrades Available: {_upgradeMenus.Count}");
     }
 
     public void ShowUpgradeOptions()
@@ -45,7 +45,7 @@ public class WeaponUpgradeUI : MonoBehaviour
         // Ensure the number
         var options = _upgradeMenus.GetRange(0, 3);
         
-        Debug.Log($"Showing {options} upgrade options");
+        //Debug.Log($"Showing {options} upgrade options");
 
         foreach (var option in options)
         {
@@ -60,7 +60,7 @@ public class WeaponUpgradeUI : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 option.ApplyUpgrade();
-                Debug.Log($"Upgrade applied: {option.upgradeName}");
+                //Debug.Log($"Upgrade applied: {option.upgradeName}");
                 CloseUpgradeUI();
             });
         }

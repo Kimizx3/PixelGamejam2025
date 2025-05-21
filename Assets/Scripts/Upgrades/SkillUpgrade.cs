@@ -37,13 +37,13 @@ public class SkillUpgrade : MonoBehaviour
 
     private void ActivateTimeSkill()
     {
-        Debug.Log("Time-based skill activated!");
+        //.Log("Time-based skill activated!");
         // Put logic here...
     }
 
     private void ActivateBulletSkill()
     {
-        Debug.Log("Bullet-based skill activated!");
+        //Debug.Log("Bullet-based skill activated!");
         // Put logic here...
     }
 }
